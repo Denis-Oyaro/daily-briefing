@@ -1,0 +1,10 @@
+body {
+  text-align: center;
+}
+div.container {
+  width: 400px;
+  margin: 0 auto;
+}
+.emoji {
+  font-size: 4em;
+}
