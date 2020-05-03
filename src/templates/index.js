@@ -14,7 +14,7 @@ const generateVibe = () => {
   return vibes[Math.floor(Math.random() * vibes.length)]
 }
 
-export default function IndexPage() {
+export default function IndexPage({ pageContext: { articles } }) {
   const [vibe, setVibe] = useState("")
 
   useEffect(() => {
@@ -32,6 +32,18 @@ export default function IndexPage() {
         <div>
           <Emoji symbol="💜" label="love" />
         </div>
+        <ul>
+          {articles.map((article, indx) => (
+            <li key={indx}>
+              <h3>
+                <a href={article.url}>{article.title}</a>
+              </h3>
+              <span>
+                {article.source.name} - <time>{article.publishedAt}</time>
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   )
