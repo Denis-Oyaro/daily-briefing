@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { graphql } from "gatsby"
+import { Helmet } from "react-helmet"
 import Emoji from "../components/Emoji"
 
 const generateVibe = () => {
@@ -14,7 +14,7 @@ const generateVibe = () => {
   return vibes[Math.floor(Math.random() * vibes.length)]
 }
 
-export default function IndexPage({ data }) {
+export default function IndexPage() {
   const [vibe, setVibe] = useState("")
 
   useEffect(() => {
@@ -22,23 +22,17 @@ export default function IndexPage({ data }) {
   }, [])
 
   return (
-    <div className="container">
-      <h1>About {data.site.siteMetadata.title}</h1>
-      <h2>This is a page for you</h2>
-      <div className="vibe">{`You are great!${vibe}`}</div>
-      <div>
-        <Emoji symbol="💜" label="love" />
+    <>
+      <Helmet>
+        <title>A page for you</title>
+      </Helmet>
+      <div className="container">
+        <h1>This is a page for you</h1>
+        <div className="vibe">{`You are great!${vibe}`}</div>
+        <div>
+          <Emoji symbol="💜" label="love" />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
-
-export const query = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`
