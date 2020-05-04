@@ -12,5 +12,11 @@ module.exports = {
         component: require.resolve(`./src/components/layout.js`),
       },
     },
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        mergeSecurityHeaders: true, // boolean to turn off the default security headers
+      },
+    },
   ],
 }

@@ -7,12 +7,47 @@
 // You can delete this file if you're not using it
 const getNews = require("./src/_data/news")
 
-exports.createPages = async ({ actions: { createPage } }) => {
-  const { articles } = await getNews()
-  // Create a page that lists all Pokémon.
+exports.createPages = async ({ actions }) => {
+  const { createPage, createRedirect } = actions
+
+  const newsArray = await getNews()
+
+  // Create redirects
+  createRedirect({
+    fromPath: "/",
+    toPath: `/fr`,
+    statusCode: 200,
+    Language: `fr`,
+  })
+
+  newsArray.forEach(news =>
+    createRedirect({
+      fromPath: "/",
+      toPath: `/${news.country}`,
+      statusCode: 200,
+      Country: `${news.country}`,
+    })
+  )
+  // fallback
+  createRedirect({
+    fromPath: "/",
+    toPath: `/gb`,
+    statusCode: 404,
+  })
+
+  // Create a page for each.
+  newsArray.forEach(news =>
+    createPage({
+      path: `/${news.country}`,
+      component: require.resolve("./src/templates/index.js"),
+      context: { articles: news.articles },
+    })
+  )
+
+  // Create a page
   createPage({
-    path: `/`,
-    component: require.resolve("./src/templates/index.js"),
-    context: { articles },
+    path: `/about`,
+    component: require.resolve("./src/templates/about.js"),
+    context: { newsArray },
   })
 }
