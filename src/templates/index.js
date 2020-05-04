@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
 import Emoji from "../components/Emoji"
-
-const generateVibe = () => {
-  const vibes = [
-    "...and you are awesome!",
-    "...and have a wonderful day!",
-    "...and you've got this!",
-    "...and so is this puppy! 🐶",
-  ]
-
-  // choose a random vibe
-  return vibes[Math.floor(Math.random() * vibes.length)]
-}
+import getWeatherData from "../utils/weather"
+import generateVibe from "../utils/vibes"
 
 export default function IndexPage({ pageContext: { articles } }) {
   const [vibe, setVibe] = useState("")
+  const [weatherData, setWeatherData] = useState(null)
 
   useEffect(() => {
     setVibe(generateVibe())
+    getWeatherData(setWeatherData)
   }, [])
 
   return (
@@ -32,6 +24,18 @@ export default function IndexPage({ pageContext: { articles } }) {
         <div>
           <Emoji symbol="💜" label="love" />
         </div>
+
+        {weatherData ? (
+          <>
+            <h2>Weather near you</h2>
+            <p>{weatherData.name}</p>
+            <p>{`${weatherData.main.temp}`}&deg;C</p>
+            <p>{weatherData.weather[0].main}</p>
+            <p>{weatherData.weather[0].description}</p>
+          </>
+        ) : null}
+
+        <h2>News in your country</h2>
         <ul>
           {articles.map((article, indx) => (
             <li key={indx}>
