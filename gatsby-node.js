@@ -15,7 +15,7 @@ exports.createPages = async ({ actions }) => {
   // Create redirects
   createRedirect({
     fromPath: "/",
-    toPath: `/fr`,
+    toPath: `/fr/index.html`,
     statusCode: 200,
     Language: `fr`,
   })
@@ -23,7 +23,7 @@ exports.createPages = async ({ actions }) => {
   newsArray.forEach(news =>
     createRedirect({
       fromPath: "/",
-      toPath: `/${news.country}`,
+      toPath: `/${news.country}/index.html`,
       statusCode: 200,
       Country: `${news.country}`,
     })
@@ -31,7 +31,7 @@ exports.createPages = async ({ actions }) => {
   // fallback
   createRedirect({
     fromPath: "/",
-    toPath: `/gb`,
+    toPath: `/gb/index.html`,
     statusCode: 404,
   })
 
